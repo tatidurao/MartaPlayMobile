@@ -8,9 +8,7 @@ let borderWidth = 0.5;
 function setup() {
   createCanvas(100, 100);
 
-  describe(
-    'A gray square with the number 0 at the top-center. The number tracks the number of places the user is touching the screen. Circles appear at each touch point and change style in response to events.'
-  );
+ 
 }
 
 function draw() {
