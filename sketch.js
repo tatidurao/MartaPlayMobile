@@ -38,6 +38,8 @@ const accessCode3 = {1:"ANU BRANCO", 2:"ANUBRANCO"}
 const accessCode4 = "JACUPEMBA"
 const accessCode5 = {1:"PICAPAU", 2:"PICA-PAU",3:"PICA PAU"}
 
+//adaptar para dispositivo movel
+let directions = { up: false, down: false, left: false, right: false };
 
 
 function preload() {
@@ -264,12 +266,12 @@ function draw()
     background(backgroundImage1);
     pc.visible = false
     
-    if(mousePressedOver(buttonComecar)|| touches.length > 0){
+    /*if(mousePressedOver(buttonComecar)|| touches.length > 0){
       pc.visible = true
       buttonSom1.visible = true
       cena = 2
       touches= [];
-    }
+    }*/
   }
   if(cena === 2){
     background(backgroundImage2);
@@ -444,48 +446,36 @@ if(habilitar5){
   }
   //controles do jogador
   if(moved===true){
-   if(keyWentDown(UP_ARROW)|| touches.length > 0){
+   //if(keyWentDown(UP_ARROW)|| touches.length > 0){
+   if(directions.up){
     pc.velocityY=-2
-    pc.changeAnimation("costa")
-    touches= [];
-    
-   }
-   else if (keyWentUp(UP_ARROW)){
+    pc.changeAnimation("costa")   
+   }else {
     pc.velocityY=0
-    pc.changeAnimation("pc_CostaP")
-    
+    pc.changeAnimation("pc_CostaP")  
    }
-   if(keyWentDown(DOWN_ARROW)|| touches.length > 0){
+   if(directions.down){
     pc.velocityY=2
-    
-    pc.changeAnimation("frente")
-    touches= [];
-   }
-   else if (keyWentUp(DOWN_ARROW)){
+    pc.changeAnimation("frente")  
+   }else{
     pc.velocityY=0
     pc.changeAnimation("pc_FrenteP")
-    
    }
-   if(keyWentDown(LEFT_ARROW)|| touches.length > 0){
+   if(directions.left){
     pc.velocityX=-2
     pc.changeAnimation("esquerda")
-    touches= [];
-   }
-   else if (keyWentUp(LEFT_ARROW)){
+    
+   }else{
     pc.velocityX=0
-    pc.changeAnimation("pc_EsquerdaP")
-   
-   }
-   
-   if(keyWentDown(RIGHT_ARROW)|| touches.length > 0){
+    pc.changeAnimation("pc_EsquerdaP") 
+   } 
+   if(directions.right){
     pc.velocityX=2
-    pc.changeAnimation("direita")
-    touches= [];
+    pc.changeAnimation("direita")  
    }
-   else if (keyWentUp(RIGHT_ARROW)){
+   else{
     pc.velocityX=0
-    pc.changeAnimation("pc_DireitaP")
-   
+    pc.changeAnimation("pc_DireitaP") 
    }
   }
 
@@ -689,3 +679,23 @@ function toqueSom(button){
   }
 }
 
+function touchStarted() {
+  for (let t of touches) {
+    if (t.y < height / 3) directions.up = true;  // Topo da tela → Cima
+    if (t.y > (2 * height) / 3) directions.down = true; // Base da tela → Baixo
+    if (t.x < width / 3) directions.left = true; // Esquerda da tela → Esquerda
+    if (t.x > (2 * width) / 3) directions.right = true; // Direita da tela → Direita
+    //começar
+    if (buttonComecar.overlapPoint(t.x, t.y)) {
+      console.log("Sprite tocado!");
+      pc.visible = true
+      buttonSom1.visible = true
+      cena = 2
+    }
+  }
+}
+
+// Quando solta o toque (simula keyWentUp)
+function touchEnded() {
+  directions = { up: false, down: false, left: false, right: false }; // Reseta ao soltar o toque
+}
