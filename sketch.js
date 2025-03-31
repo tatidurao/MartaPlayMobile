@@ -1,34 +1,58 @@
-let sprite;
-let directions = { up: false, down: false, left: false, right: false };
+// On a touchscreen device, touch the canvas using one or more fingers
+// at the same time.
+
+let bgColor = 50;
+let fillColor = 255;
+let borderWidth = 0.5;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  sprite = createSprite(width / 2, height / 2, 50, 50);
+  createCanvas(100, 100);
+
+  describe(
+    'A gray square with the number 0 at the top-center. The number tracks the number of places the user is touching the screen. Circles appear at each touch point and change style in response to events.'
+  );
 }
 
 function draw() {
-  background(200);
-  
-  // Movimenta o sprite com base nas direções tocadas
-  if (directions.up) sprite.velocityY -= 5;
-  if (directions.down) sprite.position.y += 5;
-  if (directions.left) sprite.position.x -= 5;
-  if (directions.right) sprite.position.x += 5;
+  background(bgColor);
 
-  drawSprites();
-}
+  // Style the text.
+  textAlign(CENTER);
+  textSize(16);
+  fill(0);
+  noStroke();
 
-// Quando toca na tela (simula keyWentDown)
-function touchStarted() {
-  for (let t of touches) {
-    if (t.y < height / 3) directions.up = true;  // Topo da tela → Cima
-    if (t.y > (2 * height) / 3) directions.down = true; // Base da tela → Baixo
-    if (t.x < width / 3) directions.left = true; // Esquerda da tela → Esquerda
-    if (t.x > (2 * width) / 3) directions.right = true; // Direita da tela → Direita
+  // Display the number of touch points.
+  text(touches.length, 50, 20);
+
+  // Style the touch points.
+  fill(fillColor);
+  stroke(0);
+  strokeWeight(borderWidth);
+
+  // Display the touch points as circles.
+  for (let touch of touches) {
+    circle(touch.x, touch.y, 40);
   }
 }
 
-// Quando solta o toque (simula keyWentUp)
+// Set the background color to a random grayscale value.
+function touchStarted() {
+  bgColor = random(80, 255);
+}
+
+// Set the fill color to a random grayscale value.
 function touchEnded() {
-  directions = { up: false, down: false, left: false, right: false }; // Reseta ao soltar o toque
+  fillColor = random(0, 255);
+}
+
+// Set the stroke weight.
+function touchMoved() {
+  // Increment the border width.
+  borderWidth += 0.1;
+
+  // Reset the border width once it's too thick.
+  if (borderWidth > 20) {
+    borderWidth = 0.5;
+  }
 }
