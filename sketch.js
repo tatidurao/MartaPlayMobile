@@ -13,6 +13,7 @@ var buttonSom6, buttonPicapauImage;
 var backgroundImage1, backgroundImage2, backgroundImage3, backgroundImage4,backgroundImage5;
 var bemtiviSound, anuBrancoSound, siriemaSound, jacupembaSound, beijaFlorSound, picapauSound
 var sad_sound, background_sound;
+var bControlL, bControlR, bControlT, bControlD, bSound1,bSound2, bSound3, bSound4,bSound5, btComecar
 //sinalizadores de movimento
 var moved = true;
 
@@ -149,7 +150,7 @@ function setup() {
 
  edges= createEdgeSprites();
  tente_novamente = createImg('./cenas/tente_novemente.png')
- tente_novamente.position(265,200);
+ tente_novamente.position(canvas.x + width / 2 +15,canvas.y + height / 2 - 100);
  tente_novamente.size(180,20);  
 
  text1 = createElement("h1");
@@ -244,8 +245,47 @@ function setup() {
  button5 = createImg('./sinalizadores/check.png')
  button5.position(canvas.x + width / 2 - 110,canvas.y + height / 2 - 60);
  button5.size(50,50);
+ 
+ bControlL = createImg('./sinalizadores/check.png')
+ bControlL.position(canvas.x + width / 2 - 100,canvas.y + height / 2 + 240);
+ bControlL.size(40,40);
+
+ bControlD = createImg('./sinalizadores/check.png')
+ bControlD.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 240);
+ bControlD.size(40,40);
+
+ bControlR = createImg('./sinalizadores/check.png')
+ bControlR.position(canvas.x + width / 2 ,canvas.y + height / 2 + 240);
+ bControlR.size(40,40);
+
+ bControlT = createImg('./sinalizadores/check.png')
+ bControlT.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 200);
+ bControlT.size(40,40);
+
+ bSound1= createImg('./sinalizadores/button_sound.png')
+ bSound1.position(canvas.x + width / 2-150 ,canvas.y + height / 2 + 50);
+ bSound1.size(100,60);
+
+ bSound2= createImg('./sinalizadores/button_sound.png')
+ bSound2.position(canvas.x + width / 2-175 ,canvas.y + height / 2 + 180);
+ bSound2.size(100,60);
+
+ bSound3= createImg('./sinalizadores/button_sound.png')
+ bSound3.position(canvas.x + width / 2+80 ,canvas.y + height / 2 + 140);
+ bSound3.size(100,60);
+
+ bSound4= createImg('./sinalizadores/button_sound.png')
+ bSound4.position(canvas.x + width / 2+190,canvas.y + height / 2 + 80);
+ bSound4.size(100,60);
+
+ bSound5= createImg('./sinalizadores/button_sound.png')
+ bSound5.position(canvas.x + width / 2+100 ,canvas.y + height / 2 + 20);
+ bSound5.size(100,60); 
+ //415,550,50,50
+ btComecar = createImg("./sinalizadores/check.png")
+ btComecar.position(canvas.x + width / 2+135 ,canvas.y + height / 2 + 220)
+ btComecar.size(60,60);
  esconderelementos()
-      
 
 }
 
@@ -255,12 +295,17 @@ function draw()
     background(backgroundImage1);
     pc.visible = false
     
-    if(mousePressedOver(buttonComecar)||touches.length > 0){
+    if(mousePressedOver(buttonComecar)){
       pc.visible = true
       buttonSom1.visible = true
+      bControlD.show()
+      bControlT.show()
+      bControlL.show()
+      bControlR.show()
       cena = 2
-      touches = [];
+      
     }
+    btComecar.mouseClicked(comecar)
   }
   if(cena === 2){
     background(backgroundImage2);
@@ -272,10 +317,12 @@ function draw()
     //escuta1 bem ti vi
     //colide só se var colidir 1 for true
     if(pc.collide(buttonSom1) && colidir1){
-      buttonSom1.changeAnimation("soundImage")
+      buttonSom1.changeAnimation("bemtivi")
       buttonSom1.setCollider("rectangle",0,0,200, 100);
       habilitar1 = true //habilitar pressionamento do botão
       buttonSom1.scale = 0.4
+      buttonSom1.visible=false
+      bSound1.show()
       moved=false
       pc.changeAnimation("pc_FrenteP") //mudar animação
       pc.velocityX = 0
@@ -283,13 +330,25 @@ function draw()
       pc.x=pc.x-30
     }
     //pressionar apenas se o var habilitar 1 for true
-    if(mousePressedOver(buttonSom1) || touches.length > 0  && habilitar1){
+    /*if(mousePressedOver(buttonSom1) && habilitar1){
       
       mostrarelementosIndividual(text1, textDica1,access1, button1)
       toqueSom(bemtiviSound)
       
-      touches = [];
-    }
+     
+    }*/
+    bControlL.mouseClicked(left) 
+    bControlR.mouseClicked(right) 
+    bControlT.mouseClicked(topp) 
+    bControlD.mouseClicked(down) 
+    bSound1.mouseClicked(toqueBT1)
+    bSound2.mouseClicked(toqueBT2)
+    bSound3.mouseClicked(toqueBT3)
+    bSound4.mouseClicked(toqueBT4)
+    bSound5.mouseClicked(toqueBT5)
+      
+  
+
     if(habilitar1){
       //acaobuttonGenerica(palavraChave,caixaChave, buttonSom,stringAnimation, pcx, pcy, t,d,a,b, habilitar, colidir, nextButton)
       //button1.mouseClicked(()=>{acaobuttonGenerica(accessCode1, access1, buttonSom1,"bemtivi",190,425, text1, textDica1, access1,button1, habilitar1,colidir1, buttonSom2)})
@@ -301,6 +360,8 @@ function draw()
       buttonSom2.setCollider("rectangle",0,0,200, 200);
       habilitar2 = true //habilitar pressionamento do botão
       buttonSom2.scale = 0.4
+      buttonSom2.visible=false
+      bSound2.show()
       moved=false
       pc.changeAnimation("pc_FrenteP") //mudar animação
       pc.velocityX = 0
@@ -309,13 +370,13 @@ function draw()
       pc.y=430
     }
     //pressionar apenas se o var habilitar 1 for true
-    if(mousePressedOver(buttonSom2) && habilitar2){
+   /* if(mousePressedOver(buttonSom2) && habilitar2){
       
       mostrarelementosIndividual(text2, textDica2,access2, button2)
       toqueSom(siriemaSound)
       
       
-    }
+    }*/
     if(habilitar2){
       //button2.mouseClicked(()=>{acaobuttonGenerica(accessCode2, access2, buttonSom2,"siriema",200,530, text2, textDica2, access2,button2, habilitar2,colidir2, buttonSom3)})
       button2.mouseClicked(acaobutton2)
@@ -326,6 +387,8 @@ function draw()
     buttonSom3.setCollider("rectangle",0,0,200, 200);
     habilitar3 = true //habilitar pressionamento do botão
     buttonSom3.scale = 0.4
+    buttonSom3.visible=false
+    bSound3.show()
     moved=false
     pc.changeAnimation("pc_FrenteP") //mudar animação
     pc.velocityX = 0
@@ -333,12 +396,12 @@ function draw()
     pc.x=pc.x-30
   }
   //pressionar apenas se o var habilitar 1 for true
-  if(mousePressedOver(buttonSom3) && habilitar3){
+ /*if(mousePressedOver(buttonSom3) && habilitar3){
     
     mostrarelementosIndividual(text3, textDica3,access3, button3)
     toqueSom(anuBrancoSound)
     
-  }
+  }*/
   if(habilitar3){
     button3.mouseClicked(acaobutton3)
   }
@@ -350,6 +413,8 @@ function draw()
     buttonSom4.setCollider("rectangle",0,0,200, 200);
     habilitar4 = true //habilitar pressionamento do botão
     buttonSom4.scale = 0.4
+    buttonSom4.visible=false
+    bSound4.show()
     moved=false
     pc.changeAnimation("pc_FrenteP") //mudar animação
     pc.velocityX = 0
@@ -357,12 +422,12 @@ function draw()
     pc.x=pc.x-30
   }
   //pressionar apenas se o var habilitar 1 for true
-  if(mousePressedOver(buttonSom4) && habilitar4){
+  /*if(mousePressedOver(buttonSom4) && habilitar4){
     
     mostrarelementosIndividual(text4, textDica4,access4, button4)
     toqueSom(jacupembaSound)
     
-  }
+  }*/
   if(habilitar4){
     button4.mouseClicked(acaobutton4)
   }
@@ -372,6 +437,8 @@ if(pc.collide(buttonSom5) && colidir5){
   buttonSom5.changeAnimation("soundImage")
   habilitar5 = true //habilitar pressionamento do botão
   buttonSom5.scale = 0.4
+  buttonSom5.visible=false
+  bSound5.show()
   moved=false
   pc.changeAnimation("pc_FrenteP") //mudar animação
   pc.velocityX = 0
@@ -379,12 +446,12 @@ if(pc.collide(buttonSom5) && colidir5){
   pc.x=pc.x-30
 }
 //pressionar apenas se o var habilitar 1 for true
-if(mousePressedOver(buttonSom5) && habilitar5){
+/*if(mousePressedOver(buttonSom5) && habilitar5){
   
   mostrarelementosIndividual(text5, textDica5,access5, button5)
   toqueSom(picapauSound)
     
-}
+}*/
 if(habilitar5){
   button5.mouseClicked(acaobutton5)
 }  
@@ -412,6 +479,10 @@ if(habilitar5){
     buttonSom3.visible =false
     buttonSom4.visible =false
     buttonSom5.visible =false
+    bControlD.hide()
+    bControlL.hide()
+    bControlR.hide()
+    bControlT.hide()
 
     
     setTimeout(() => {
@@ -429,6 +500,10 @@ if(habilitar5){
     buttonSom3.visible =false
     buttonSom4.visible =false
     buttonSom5.visible =false
+    bControlD.hide()
+    bControlL.hide()
+    bControlR.hide()
+    bControlT.hide()
     //background_sound.stop()
     
   }
@@ -508,6 +583,8 @@ function acaobutton1()
   if(authenticate(accessCode1[1],access1.value())||authenticate(accessCode1[2],access1.value())||authenticate(accessCode1[3],access1.value())||authenticate(accessCode1[4],access1.value())){
     buttonSom1.changeAnimation("bemtivi")
     buttonSom1.setCollider("rectangle",0,0,200, 400);
+    buttonSom1.visible=true
+    bSound1.hide()
     pc.x = 30
     pc.y = 360
     esconderelementosIndividual(text1,textDica1,access1,button1)
@@ -533,8 +610,10 @@ function acaobutton2()
   if(authenticate(accessCode2[1],access2.value())||authenticate(accessCode2[2],access2.value())){
     buttonSom2.changeAnimation("siriema")
     buttonSom2.setCollider("rectangle",0,0,200, 400);
+    buttonSom2.visible=true
+    bSound2.hide()
     pc.x = 200
-    pc.y = 530
+    pc.y = 480
     esconderelementosIndividual(text2,textDica2,access2,button2)
     score++;
     habilitar2=false; //desabilitar clique
@@ -556,6 +635,8 @@ function acaobutton3()
   if(authenticate(accessCode3[1],access3.value())||authenticate(accessCode3[2],access3.value())){
     buttonSom3.changeAnimation("anubranco")
     buttonSom3.setCollider("rectangle",0,0,400, 400);
+    buttonSom3.visible=true
+    bSound3.hide()
     pc.x = 360
     pc.y = 450
     esconderelementosIndividual(text3,textDica3,access3,button3)
@@ -579,6 +660,8 @@ function acaobutton4()
   if(authenticate(accessCode4,access4.value())){
     buttonSom4.changeAnimation("jacupemba")
     buttonSom4.setCollider("rectangle",150,0,400, 400);
+    buttonSom4.visible=true
+    bSound4.hide()
     pc.x = 300
     pc.y = 360
     esconderelementosIndividual(text4,textDica4,access4,button4)
@@ -601,7 +684,8 @@ function acaobutton5()
 {
   if(authenticate(accessCode5[1],access5.value())||authenticate(accessCode5[2],access5.value())||authenticate(accessCode5[3],access5.value())){
     buttonSom5.changeAnimation("picapau")
-    
+    buttonSom5.visible=true
+    bSound5.hide()
     buttonSom5.x = 390
     buttonSom5.y = 210
     pc.x = 270
@@ -640,6 +724,15 @@ function esconderelementos(){
   text4.hide()
   text5.hide()
   tente_novamente.hide()
+  bControlD.hide()
+  bControlT.hide()
+  bControlL.hide()
+  bControlR.hide()
+  bSound1.hide()
+  bSound2.hide()
+  bSound3.hide()
+  bSound4.hide()
+  bSound5.hide()
 
   textDica1.hide()
   textDica2.hide()
@@ -706,5 +799,82 @@ function windowResized() {
   button3.position(canvas.x + width / 2 - 110,canvas.y + height / 2 - 60);
   button4.position(canvas.x + width / 2 - 110,canvas.y + height / 2 - 60);
   button5.position(canvas.x + width / 2 - 110,canvas.y + height / 2 - 60);
+
+ bControlL.position(canvas.x + width / 2 - 100,canvas.y + height / 2 + 240);
+ bControlD.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 240);
+ bControlR.position(canvas.x + width / 2 ,canvas.y + height / 2 + 240);
+ bControlT.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 200);
+
+ bSound1.position(canvas.x + width / 2-150 ,canvas.y + height / 2 + 50);
+ bSound2.position(canvas.x + width / 2-175 ,canvas.y + height / 2 + 180);
+ bSound3.position(canvas.x + width / 2+80 ,canvas.y + height / 2 + 140);
+ bSound4.position(canvas.x + width / 2+190,canvas.y + height / 2 + 80);
+ bSound5.position(canvas.x + width / 2-100 ,canvas.y + height / 2 + 20);
+ 
+ tente_novamente.position(canvas.x + width / 2 +15,canvas.y + height / 2 - 100);
+ btComecar.position(canvas.x + width / 2+135 ,canvas.y + height / 2 + 220)
+ 
   
+}
+
+function left(){
+  pc.x -=8
+      //pc.scale=0.4
+      pc.changeAnimation("esquerda")
+}
+function right(){
+  pc.x +=8
+      //pc.scale=0.4
+      pc.changeAnimation("direita")
+}
+function topp(){
+  pc.y -=8
+      //pc.scale=0.4
+      pc.changeAnimation("costa")
+}
+function down(){
+  pc.y +=8
+      //pc.scale=0.4
+      pc.changeAnimation("frente")
+}
+
+function toqueBT1(){
+  mostrarelementosIndividual(text1, textDica1,access1, button1)
+ 
+  toqueSom(bemtiviSound)
+}
+
+function toqueBT2(){
+  mostrarelementosIndividual(text2, textDica2,access2, button2)
+ 
+  toqueSom(siriemaSound)
+}
+
+function toqueBT3(){
+  mostrarelementosIndividual(text3, textDica3,access3, button3)
+ 
+  toqueSom(anuBrancoSound)
+}
+
+function toqueBT4(){
+  mostrarelementosIndividual(text4, textDica4,access4, button4)
+ 
+  toqueSom(jacupembaSound)
+}
+
+function toqueBT5(){
+  mostrarelementosIndividual(text5, textDica5,access5, button5)
+ 
+  toqueSom(picapauSound)
+}
+
+function comecar(){
+      pc.visible = true
+      buttonSom1.visible = true
+      bControlD.show()
+      bControlT.show()
+      bControlL.show()
+      bControlR.show()
+      btComecar.hide()
+      cena = 2
 }
