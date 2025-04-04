@@ -150,7 +150,7 @@ function setup() {
 
  edges= createEdgeSprites();
  tente_novamente = createImg('./cenas/tente_novemente.png')
- tente_novamente.position(canvas.x + width / 2 +15,canvas.y + height / 2 - 100);
+ tente_novamente.position(canvas.x + width / 2 +28,canvas.y + height / 2 - 100);
  tente_novamente.size(180,20);  
 
  text1 = createElement("h1");
@@ -246,20 +246,20 @@ function setup() {
  button5.position(canvas.x + width / 2 - 110,canvas.y + height / 2 - 60);
  button5.size(50,50);
  
- bControlL = createImg('./sinalizadores/check.png')
+ bControlL = createImg('./sinalizadores/esquerda.png')
  bControlL.position(canvas.x + width / 2 - 100,canvas.y + height / 2 + 240);
  bControlL.size(40,40);
 
- bControlD = createImg('./sinalizadores/check.png')
+ bControlD = createImg('./sinalizadores/down.png')
  bControlD.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 240);
  bControlD.size(40,40);
 
- bControlR = createImg('./sinalizadores/check.png')
+ bControlR = createImg('./sinalizadores/direita.png')
  bControlR.position(canvas.x + width / 2 ,canvas.y + height / 2 + 240);
  bControlR.size(40,40);
 
- bControlT = createImg('./sinalizadores/check.png')
- bControlT.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 200);
+ bControlT = createImg('./sinalizadores/top.png')
+ bControlT.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 190);
  bControlT.size(40,40);
 
  bSound1= createImg('./sinalizadores/button_sound.png')
@@ -267,24 +267,25 @@ function setup() {
  bSound1.size(100,60);
 
  bSound2= createImg('./sinalizadores/button_sound.png')
- bSound2.position(canvas.x + width / 2-175 ,canvas.y + height / 2 + 180);
+ bSound2.position(canvas.x + width / 2-200 ,canvas.y + height / 2 + 180);
  bSound2.size(100,60);
 
  bSound3= createImg('./sinalizadores/button_sound.png')
- bSound3.position(canvas.x + width / 2+80 ,canvas.y + height / 2 + 140);
+ bSound3.position(canvas.x + width / 2+80 ,canvas.y + height / 2 + 220);
  bSound3.size(100,60);
 
  bSound4= createImg('./sinalizadores/button_sound.png')
- bSound4.position(canvas.x + width / 2+190,canvas.y + height / 2 + 80);
+ bSound4.position(canvas.x + width / 2+160,canvas.y + height / 2 + 80);
  bSound4.size(100,60);
 
  bSound5= createImg('./sinalizadores/button_sound.png')
- bSound5.position(canvas.x + width / 2+100 ,canvas.y + height / 2 + 20);
+ bSound5.position(canvas.x + width / 2+95 ,canvas.y + height / 2 + 20);
  bSound5.size(100,60); 
  //415,550,50,50
  btComecar = createImg("./sinalizadores/check.png")
  btComecar.position(canvas.x + width / 2+135 ,canvas.y + height / 2 + 220)
  btComecar.size(60,60);
+ btComecar.class("btcomecar");
  esconderelementos()
 
 }
@@ -394,6 +395,7 @@ function draw()
     pc.velocityX = 0
     pc.velocityY = 0
     pc.x=pc.x-30
+    pc.y=pc.y-30
   }
   //pressionar apenas se o var habilitar 1 for true
  /*if(mousePressedOver(buttonSom3) && habilitar3){
@@ -558,8 +560,8 @@ if(habilitar5){
 
   
   //comportamentos fora do estado de jogo
-  textSize(10);
-  text (mouseX + "," + mouseY, mouseX, mouseY)
+ // textSize(10);
+  //text (mouseX + "," + mouseY, mouseX, mouseY)
   drawSprites();
 }
 /*function acaobuttonGenerica(palavraChave,caixaChave, buttonSom,stringAnimation, pcx, pcy, t,d,a,b, habilitar, colidir, nextButton){
@@ -612,8 +614,8 @@ function acaobutton2()
     buttonSom2.setCollider("rectangle",0,0,200, 400);
     buttonSom2.visible=true
     bSound2.hide()
-    pc.x = 200
-    pc.y = 480
+    pc.x = 260
+    pc.y = 500
     esconderelementosIndividual(text2,textDica2,access2,button2)
     score++;
     habilitar2=false; //desabilitar clique
@@ -803,39 +805,45 @@ function windowResized() {
  bControlL.position(canvas.x + width / 2 - 100,canvas.y + height / 2 + 240);
  bControlD.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 240);
  bControlR.position(canvas.x + width / 2 ,canvas.y + height / 2 + 240);
- bControlT.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 200);
+ bControlT.position(canvas.x + width / 2-50 ,canvas.y + height / 2 + 190);
 
  bSound1.position(canvas.x + width / 2-150 ,canvas.y + height / 2 + 50);
- bSound2.position(canvas.x + width / 2-175 ,canvas.y + height / 2 + 180);
- bSound3.position(canvas.x + width / 2+80 ,canvas.y + height / 2 + 140);
- bSound4.position(canvas.x + width / 2+190,canvas.y + height / 2 + 80);
- bSound5.position(canvas.x + width / 2-100 ,canvas.y + height / 2 + 20);
+ bSound2.position(canvas.x + width / 2-200 ,canvas.y + height / 2 + 180);
+ bSound3.position(canvas.x + width / 2+80 ,canvas.y + height / 2 + 220);
+ bSound4.position(canvas.x + width / 2+160,canvas.y + height / 2 + 80);
+ bSound5.position(canvas.x + width / 2+95 ,canvas.y + height / 2 + 20);
  
- tente_novamente.position(canvas.x + width / 2 +15,canvas.y + height / 2 - 100);
+ tente_novamente.position(canvas.x + width / 2 +28,canvas.y + height / 2 - 100);
  btComecar.position(canvas.x + width / 2+135 ,canvas.y + height / 2 + 220)
  
   
 }
 
 function left(){
-  pc.x -=8
-      //pc.scale=0.4
-      pc.changeAnimation("esquerda")
+  if(moved===true){
+    pc.x -=15
+   
+    pc.changeAnimation("esquerda")
+  }
 }
 function right(){
-  pc.x +=8
-      //pc.scale=0.4
-      pc.changeAnimation("direita")
+  if(moved===true){
+   pc.x +=15
+      
+    pc.changeAnimation("direita")
+  }
 }
 function topp(){
-  pc.y -=8
-      //pc.scale=0.4
-      pc.changeAnimation("costa")
+  if(moved===true){
+    pc.y -=15
+    pc.changeAnimation("costa")
+  }
 }
 function down(){
-  pc.y +=8
-      //pc.scale=0.4
-      pc.changeAnimation("frente")
+  if(moved===true){
+    pc.y +=15
+    pc.changeAnimation("frente")
+  }
 }
 
 function toqueBT1(){
